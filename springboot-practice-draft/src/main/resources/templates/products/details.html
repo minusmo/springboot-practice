@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품상세</title>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(function() {
+            let reviewPage = 0;
+            const reviewSize = 10;
+            $('#moreReviews').click(function() {
+                reviewPage++;
+                $.ajax({
+                    url: '/reviews',
+                    type: 'GET',
+                    data: {
+                        page: reviewPage,
+                        size: reviewSize,
+                        productSeq: $('#product-seq').attr('data-seq')
+                    },
+                    success: function(data) {
+                        const reviews = data.reviewList;
+                        const reviewTableBody = $('#reviews tbody');
+                        reviewTableBody.html('');
+                        $.each(reviews, function(index, review) {
+                            const tr = $('<tr>');
+                            tr.append($('<td>').text(review.seq));
+                            tr.append($('<td>').text(review.title));
+                            tr.append($('<td>').text(review.content));
+                            tr.append($('<td>').text(review.createDate));
+                            tr.append($('<td>').text(review.updateDate));
+                            reviewTableBody.append(tr);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+  <div class="logo">
+    <a th:href="@{/}">
+      홈으로 돌아가기
+    </a>
+  </div>
+<h1>상품 상세 보기</h1>
+<div class="container">
+    <div class="product">
+        <a th:href="@{/products/{productSeq}/edit(productSeq=${productAndReviews.productSeq})}">
+          <button>상품 수정하기</button>
+        </a>
+        <h2>상품명: <span th:text="${productAndReviews.name}"></span></h2>
+        <p>번호: <span id="product-seq" th:attr="data-seq=${productAndReviews.productSeq}" th:text="${productAndReviews.productSeq}"></span></p>
+        <p>가격: <span th:text="${productAndReviews.price}"></span></p>
+        <p>재고: <span th:text="${productAndReviews.stock}"></span></p>
+        <p>설명: <span th:text="${productAndReviews.description}"></span></p>
+        <p>상품 카테고리: <span th:text="${productAndReviews.category}"></span></p>
+        <p>상품 가격: <span th:text="${productAndReviews.price}"></span></p>
+        <p>상품 등록일: <span th:text="${productAndReviews.creationDate}"></span></p>
+        <p>상품 수정일: <span th:text="${productAndReviews.updateDate}"></span></p>
+    </div>
+    <div id="reviews">
+      <h2>상품 리뷰</h2>
+      <button id="moreReviews">
+        다음 10개의 리뷰 보기(2페이지의 리뷰보기)
+      </button>
+      <p>
+        리뷰 개수:
+        <span th:text="${productAndReviews.reviews.count}"></span>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>리뷰 번호</th>
+            <th>리뷰 내용</th>
+            <th>리뷰 작성자</th>
+            <th>리뷰 작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="review : ${productAndReviews.reviews.reviewList}">
+            <td th:text="${review.seq}"></td>
+            <td th:text="${review.title}"></td>
+            <td th:text="${review.content}"></td>
+            <td th:text="${review.createDate}"></td>
+            <td th:text="${review.updateDate}"></td>
+          </tr>
+        </tbody>
+    </div>
+</body>
+</html>

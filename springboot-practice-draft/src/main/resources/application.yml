@@ -1,0 +1,33 @@
+server:
+  port:
+spring:
+  application:
+    name: springBootPractice
+  datasource:
+    url: jdbc:mysql://localhost:3306/scit
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-idle: 10
+      maximum-pool-size: 10
+      idle-timeout: 300000
+      max-lifetime: 1800000
+  thymeleaf:
+    cache: false
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      location: C:/savedFiles
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        highlight_sql: true
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <a th:href="@{/}"> 홈으로 돌아가기 </a>
+      </div>
+      <h2>여기가 인덱스</h2>
+    </div>
+    <div class="">
+      <!-- 여기서는 예시를 위해 1번 상품을 보는 것으로 고정해놨습니다. -->
+      <a th:href="@{/products/1/details}"> 상품 상세 보기 </a>
+    </div>
+  </body>
+</html>

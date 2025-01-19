@@ -1,0 +1,24 @@
+<!-- html 파일에 있어서는, 중요한 부분만 설명을 드리겠습니다. -->
+<!-- 왜냐하면, html 자체는 이해하기도 어렵지 않고, 기본적으로 외워서 사용하기만 해도 문제가 없기 때문입니다. -->
+<!-- html 파일은 브라우저가 읽어들여서 사용자에게 보여주기 위한 웹 문서의 일종입니다. -->
+<!-- 수업 때 배운 것을 잘 기억해두시면 문제가 없습니다. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <a th:href="@{/}"> 홈으로 돌아가기 </a>
+      </div>
+      <h2>여기가 인덱스</h2>
+    </div>
+    <div class="">
+      <!-- 여기서는 예시를 위해 1번 상품을 보는 것으로 고정해놨습니다. -->
+      <a th:href="@{/products/1/details}"> 상품 상세 보기 </a>
+    </div>
+  </body>
+</html>

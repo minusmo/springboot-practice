@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품상세</title>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script>
+        // $() 함수는 jQuery 함수로, 문서가 모두 로드되면 실행됩니다.
+        // html 문서 안에 있는 태그가 다 생성되었고, 자바스크립트에서 조작하고자하는
+        // 자바스크립트 객체를 문제없이 생성, 조작할 수 있다는 보장이 있기 때문에 이렇게 사용합니다.
+        // 만약 문서가 모두 로드 되기 전에 실행되면, 오류가 발생할 수 있습니다.
+        $(function() {
+            // 현재 페이지 번호를 저장할 변수를 선언합니다.
+            let reviewPage = 0;
+            // 한 번에 보여줄 리뷰 개수를 저장할 변수를 선언합니다.
+            const reviewSize = 10;
+            // moreReviews 버튼을 클릭하면, 리뷰를 더 불러오는 이벤트를 추가합니다.
+            // 이 예제에서는 간단히 다음 페이지의 리뷰를 한 번만 불러오도록 했습니다.
+            $('#moreReviews').click(function() {
+                // 현재 페이지 번호를 1 증가시킵니다.
+                reviewPage++;
+                $.ajax({
+                    url: '/reviews',
+                    type: 'GET',
+                    data: {
+                        page: reviewPage,
+                        size: reviewSize,
+                        productSeq: $('#product-seq').attr('data-seq')
+                    },
+                    success: function(data) {
+                        // 수업 내용과 똑같기 때문에 자세한 설명은 생략합니다.
+                        // 혹시 이해가 안되는 부분이 있으면, 저에게 직접 질문해주세요.
+                        // 자바코드는 열심히 설명했는데 자바스크립트는 이렇게만 넘어가는 이유는,
+                        // 현재 수준에서는 자바스크립트는 자바보다 훨씬 중요도가 낮기 때문입니다.
+                        const reviews = data.reviewList;
+                        const reviewTableBody = $('#reviews tbody');
+                        reviewTableBody.html('');
+                        $.each(reviews, function(index, review) {
+                            const tr = $('<tr>');
+                            tr.append($('<td>').text(review.seq));
+                            tr.append($('<td>').text(review.title));
+                            tr.append($('<td>').text(review.content));
+                            tr.append($('<td>').text(review.createDate));
+                            tr.append($('<td>').text(review.updateDate));
+                            reviewTableBody.append(tr);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+  <div class="logo">
+    <a th:href="@{/}">
+      홈으로 돌아가기
+    </a>
+  </div>
+<h1>상품 상세 보기</h1>
+<div class="container">
+    <div class="product">
+        <!--  이 문법은 배운적은 없습니다만, PathVariable을 사용하고자 할 때 사용하는 문법이라고 생각하시면 됩니다.  -->
+        <a th:href="@{/products/{productSeq}/edit(productSeq=${productAndReviews.productSeq})}">
+          <button>상품 수정하기</button>
+        </a>
+        <h2>상품명: <span th:text="${productAndReviews.name}"></span></h2>
+        <p>번호: <span id="product-seq" th:attr="data-seq=${productAndReviews.productSeq}" th:text="${productAndReviews.productSeq}"></span></p>
+        <p>가격: <span th:text="${productAndReviews.price}"></span></p>
+        <p>재고: <span th:text="${productAndReviews.stock}"></span></p>
+        <p>설명: <span th:text="${productAndReviews.description}"></span></p>
+        <p>상품 카테고리: <span th:text="${productAndReviews.category}"></span></p>
+        <p>상품 가격: <span th:text="${productAndReviews.price}"></span></p>
+        <p>상품 등록일: <span th:text="${productAndReviews.creationDate}"></span></p>
+        <p>상품 수정일: <span th:text="${productAndReviews.updateDate}"></span></p>
+    </div>
+    <div id="reviews">
+      <h2>상품 리뷰</h2>
+      <button id="moreReviews">
+        다음 10개의 리뷰 보기(2페이지의 리뷰보기)
+      </button>
+      <p>
+        리뷰 개수:
+        <span th:text="${productAndReviews.reviews.count}"></span>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>리뷰 번호</th>
+            <th>리뷰 내용</th>
+            <th>리뷰 작성자</th>
+            <th>리뷰 작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="review : ${productAndReviews.reviews.reviewList}">
+            <td th:text="${review.seq}"></td>
+            <td th:text="${review.title}"></td>
+            <td th:text="${review.content}"></td>
+            <td th:text="${review.createDate}"></td>
+            <td th:text="${review.updateDate}"></td>
+          </tr>
+        </tbody>
+    </div>
+</body>
+</html>

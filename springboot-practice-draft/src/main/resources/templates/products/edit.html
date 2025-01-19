@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>상품 수정</title>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="logo">
+      <a th:href="@{/}"> 홈으로 돌아가기 </a>
+    </div>
+    <h1>상품 수정</h1>
+    <!--  이 문법은 배운적은 없습니다만, PathVariable을 사용하고자 할 때 사용하는 문법이라고 생각하시면 됩니다.  -->
+    <!--  /products/1/edit 로 요청하도록 동작합니다. -->
+    <form th:action="@{/products/{seq}/edit(seq=${product.seq})}" method="post">
+      <div class="container">
+        <div class="product">
+          <h2>
+            상품명: <input type="text" name="name" th:value="${product.name}" />
+          </h2>
+          <p>번호: <span th:text="${product.seq}"></span></p>
+          <p>
+            재고: <input type="text" name="stock" th:value="${product.stock}" />
+          </p>
+          <p>
+            설명:
+            <input
+              type="text"
+              name="description"
+              th:value="${product.description}"
+            />
+          </p>
+          <p>
+            상품 카테고리:
+            <input type="text" name="category" th:value="${product.category}" />
+          </p>
+          <p>
+            상품 가격:
+            <input type="text" name="price" th:value="${product.price}" />
+          </p>
+          <p>상품 수정일: <span th:text="${product.creationDate}"></span></p>
+          <p>상품 등록일: <span th:text="${product.updateDate}"></span></p>
+        </div>
+      </div>
+      <button type="submit">수정하기</button>
+    </form>
+  </body>
+</html>
