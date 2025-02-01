@@ -1,6 +1,6 @@
 # 이 애플리케이션의 설정 파일입니다.
 # 설정 파일이라는 것은 본디, 애플리케이션에서 사용되는 이런저런 데이터를
-# 별도의 파일로 분리하여두고, 필요에 따라 읽어들여 사용한다고
+# 별도의 파일로 분리하여두고, 필요에 따라 읽어들여 사용한다고 보시면 됩니다.
 # 우리는 application.properties가 아닌 application.yml을 사용합니다.
 # 왜냐하면,
 # 1. yml 파일은 가독성이 뛰어납니다.
@@ -10,7 +10,7 @@
 # 쉽게 다른 프로그램에서 읽어들일 수 있기 때문입니다.
 # 들여쓰기만 잘 지켜주시면 문제될 것이 전혀 없습니다.
 # (들여쓰기를 지키는 가장 쉬운 방법은 탭이나 스페이스 중 하나만 통일성있게 사용하는 것입니다.)
-# 기존의 application.properties에서 .으로 구분하는 부분은 들여쓰기로만 바꿔주시면 된다고 생각하시면됩니다.
+# 기존의 application.properties에서 .으로 구분하는 부분을 들여쓰기로만 바꿔주시면 된다고 생각하시면됩니다.
 # application.properties, application.yml에서 사용되는 속성은 다음을 참고해주세요.(어떤 속성에 어떤값을 사용해야하는지 모르시겠을 때)
 # https://docs.spring.io/spring-boot/appendix/application-properties/index.html#application-properties.core.spring.application.name
 server:
